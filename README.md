@@ -3,14 +3,8 @@
 This folder is a Claude Code plugin marketplace with one plugin, **game-site-kit**
 ([plugins/game-site-kit](plugins/game-site-kit/README.md)).
 
-## Install from this folder
+## Install
 In Claude Code (an interactive `claude` terminal):
-```
-/plugin marketplace add E:/Data/GameSiteKit
-/plugin install game-site-kit@game-site-kit-marketplace
-```
-
-## Install from GitHub
 ```
 /plugin install game-site-kit --marketplace valendhar/GameSiteKit
 ```
