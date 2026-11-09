@@ -168,4 +168,4 @@ if __name__ == "__main__":
     opts = {a.split("=", 1)[0]: (a.split("=", 1)[1] if "=" in a else True) for a in sys.argv[1:] if a.startswith("--")}
     if len(args) != 2:
         sys.exit(__doc__)
-    cutout(args[0], args[1], tol=int(opts.get("--tol", 13)), band=int(opts.get("--band", 4)), shadow=bool(opts.get("--shadow")))
+    cutout(args[0], args[1], tol=int(opts.get("--tol", 14)), band=int(opts.get("--band", 14)), shadow=bool(opts.get("--shadow")))
