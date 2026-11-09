@@ -3,6 +3,13 @@
 A Claude Code plugin for building and maintaining a website for your game: from an empty folder to a live
 GitHub Pages site, and then every new picture, story change and DevLog video after that.
 
+## Install
+In Claude Code:
+```
+/plugin install game-site-kit --marketplace valendhar/GameSiteKit
+```
+On older versions: `/plugin marketplace add valendhar/GameSiteKit`, then `/plugin install game-site-kit@game-site-kit-marketplace`.
+
 ## Skills
 | Skill | Use it to |
 |---|---|

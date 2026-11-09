@@ -10,12 +10,17 @@ In Claude Code (an interactive `claude` terminal):
 /plugin install game-site-kit@game-site-kit-marketplace
 ```
 
-## Share it
-Push this folder to a GitHub repository, then anyone can install it with:
+## Install from GitHub
 ```
-/plugin marketplace add <github-user>/<repo>
+/plugin install game-site-kit --marketplace valendhar/GameSiteKit
+```
+On older Claude Code versions:
+```
+/plugin marketplace add valendhar/GameSiteKit
 /plugin install game-site-kit@game-site-kit-marketplace
 ```
+
+Licensed under the MIT License (see `LICENSE`).
 
 ## Change it
 Edit the skills in `plugins/game-site-kit/skills/<name>/SKILL.md`, the scripts in `plugins/game-site-kit/scripts/`
