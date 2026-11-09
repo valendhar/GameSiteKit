@@ -39,6 +39,11 @@ def main():
         src = new[-1]
     old = [f for f in img.rglob("*.*") if f.suffix.lower() in EXTS and inbox not in f.parents and archive not in f.parents
            and f.stem.strip().strip(",").upper() == img_id]
+    # an image filed into the cut-out folder also has a transparent copy of the same ID in originals/: only the
+    # source is replaced (the copy is remade below), so the copy must never be taken for the image's home
+    in_cutout = [f for f in old if f.parent.name == cfg.get("cutout_folder", "\0")]
+    if in_cutout:
+        old = in_cutout
     if old:
         dest_dir = old[0].parent
     elif "--folder" in opts:
