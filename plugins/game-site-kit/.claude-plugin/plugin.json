@@ -1,0 +1,9 @@
+{
+  "name": "game-site-kit",
+  "version": "1.0.0",
+  "description": "Build and keep a website for your game: set up the GitHub repo and Pages, design the site from your game design doc, plan consistent image prompts, review and file new images from an inbox, apply story and design changes everywhere, add DevLog videos, make splash screens and thumbnails, and hand changes over to your game engine project.",
+  "author": {
+    "name": "Mike Stevanovic"
+  },
+  "keywords": ["game", "website", "github-pages", "concept-art", "image-prompts", "devlog"]
+}

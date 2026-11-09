@@ -1,0 +1,5 @@
+# private planning, prompts, game design docs and raw image sources stay off the public repository
+_private/
+_builder/images/inbox/
+_builder/images/archive/
+__pycache__/

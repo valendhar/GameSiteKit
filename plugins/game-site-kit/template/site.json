@@ -1,0 +1,16 @@
+{
+  "title": "My Game",
+  "tagline": "One line that says what the game is.",
+  "languages": ["en"],
+  "language_names": {"en": "English", "de": "Deutsch"},
+  "base_url": "https://USER.github.io/REPO/",
+  "nav": [
+    {"path": "index.html", "title": {"en": "Home", "de": "Start"}},
+    {"path": "game/index.html", "title": {"en": "The Game", "de": "Das Spiel"}},
+    {"path": "concept/index.html", "title": {"en": "Concept Art", "de": "Konzeptkunst"}},
+    {"path": "devlog/index.html", "title": {"en": "DevLog", "de": "DevLog"}}
+  ],
+  "image_folders": ["characters", "sheets", "originals"],
+  "cutout_folder": "characters",
+  "dev_port": 8766
+}

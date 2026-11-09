@@ -1,0 +1,16 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "game-site-kit-marketplace",
+  "description": "Tools for building and maintaining a website for your game.",
+  "owner": {
+    "name": "Mike Stevanovic"
+  },
+  "plugins": [
+    {
+      "name": "game-site-kit",
+      "description": "Set up, design, illustrate and maintain a game website on GitHub Pages, from the game design doc to every new image.",
+      "source": "./plugins/game-site-kit",
+      "category": "productivity"
+    }
+  ]
+}
