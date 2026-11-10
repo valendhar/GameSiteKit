@@ -6,7 +6,10 @@
   "base_url": "https://USER.github.io/REPO/",
   "nav": [
     {"path": "index.html", "title": {"en": "Home", "de": "Start"}},
-    {"path": "game/index.html", "title": {"en": "The Game", "de": "Das Spiel"}},
+    {"path": "game/index.html", "title": {"en": "The Game", "de": "Das Spiel"}, "pages": [
+      {"path": "game/index.html", "title": {"en": "Overview", "de": "Überblick"}},
+      {"path": "game/how-it-plays.html", "title": {"en": "How It Plays", "de": "So spielt es sich"}, "short": {"en": "Gameplay", "de": "Spielweise"}}
+    ]},
     {"path": "concept/index.html", "title": {"en": "Concept Art", "de": "Konzeptkunst"}},
     {"path": "devlog/index.html", "title": {"en": "DevLog", "de": "DevLog"}}
   ],

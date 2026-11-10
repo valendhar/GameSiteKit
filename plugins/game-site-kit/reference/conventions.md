@@ -2,7 +2,7 @@
 
 ## Folders of a game site
 ```
-site.json                      title, languages, navigation, image folders, dev port
+site.json                      title, languages, navigation (sections list their "pages"), image folders, dev port
 _builder/build.py, dev.py      the builder (copied from the kit's template); pages in _builder/pages/*.py
 _builder/images/
   originals/                   pictures: key art, scenes, action shots, transparent cut-outs
@@ -10,7 +10,7 @@ _builder/images/
   sheets/<group>/              concept and asset sheets, one sub-folder per Concept Art group
   inbox/                       new versions waiting for review (ignored by git)
   archive/                     replaced versions (ignored by git)
-assets/                        built images and CSS (published)
+assets/                        built images, CSS and the small site.js (published)
 _private/                      never published: game design doc, canon, prompt lists, research, handoffs
   canon.md                     names, symbols, colours, looks and rules decided so far (the source of truth)
   prompts.md                   the ordered image prompt list

@@ -36,6 +36,42 @@ figure { margin: 0; } figcaption { color: var(--muted); font-size: .9rem; margin
 .devlog-entry { display: grid; gap: 28px; grid-template-columns: 3fr 2fr; margin-bottom: 56px; }
 .devlog-video iframe { width: 100%; height: 100%; border: 0; } .kicker { color: var(--muted); font-size: .9rem; margin: 0 0 4px; }
 .site-foot { border-top: 1px solid var(--line); color: var(--muted); padding-block: 24px; margin-top: 40px; }
+/* square tiles that fill, for materials and textures: ctx.gallery(items, "gallery square") */
+.gallery.square { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
+.gallery.square img, .gallery.square .ph { aspect-ratio: 1; object-fit: cover; width: 100%; }
+
+/* section tabs: every page of a section under the page title; sticks under the header (--head-h is its height) */
+:root { --head-h: 58px; }
+html { scroll-padding-top: calc(var(--head-h) + 60px); }
+.section-tabs { position: sticky; top: var(--head-h); z-index: 4; background: var(--surface); border-block: 1px solid var(--line); margin-top: 24px; }
+.st-inner { display: flex; align-items: stretch; min-height: 52px; }
+.st-name { display: flex; align-items: center; flex-shrink: 0; padding-right: 20px; margin-right: 6px; border-right: 1px solid var(--line);
+  font-family: var(--font-head); font-size: 1.1rem; color: var(--accent); text-decoration: none; }
+.st-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 2px; flex: 1; min-width: 0; }
+.st-list li { display: flex; }
+.st-list a { position: relative; display: flex; align-items: center; min-height: 52px; padding: 0 14px; white-space: nowrap;
+  color: var(--muted); text-decoration: none; }
+.st-list a:hover { color: var(--text); }
+.st-list a[aria-current="page"] { color: var(--text); background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.st-list a[aria-current="page"]::after { content: ""; position: absolute; left: 10px; right: 10px; bottom: 0; height: 3px; background: var(--accent); }
+.st-list a:focus-visible { outline-offset: -3px; }
+.st-count { display: flex; align-items: center; flex-shrink: 0; padding-left: 16px; color: var(--muted); font-size: .9rem; font-style: italic; white-space: nowrap; }
+.pager { display: flex; justify-content: space-between; gap: 16px; padding-block: 32px 8px; margin-top: 32px; border-top: 1px solid var(--line); }
+.pager a { text-decoration: none; color: var(--text); font-family: var(--font-head); font-size: 1.05rem; }
+.pager a:hover { color: var(--accent); }
+.pager small { display: block; color: var(--accent); font-family: var(--font-body); font-size: .85rem; }
+.pager .next { margin-left: auto; text-align: right; }
+@media (max-width: 1000px) { .st-count { display: none; } }
+@media (max-width: 760px) {
+  /* on phones the row scrolls sideways; fades at the edges say it goes on that way (site.js sets the classes) */
+  .st-list { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; --fl: 0px; --fr: 32px;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--fl), #000 calc(100% - var(--fr)), transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 var(--fl), #000 calc(100% - var(--fr)), transparent); }
+  .st-list::-webkit-scrollbar { display: none; }
+  .st-list li { flex-shrink: 0; }
+  .st-list.not-start { --fl: 32px; } .st-list.at-end { --fr: 0px; }
+  .st-name { font-size: 1rem; padding-right: 12px; }
+}
 @media (max-width: 760px) { .intro, .feature, .devlog-entry { grid-template-columns: 1fr; } .feature:nth-child(even) > figure { order: 0; }
   .hero-copy { position: static; padding-block: 16px; } }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }

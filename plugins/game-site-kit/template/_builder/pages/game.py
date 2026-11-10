@@ -13,4 +13,16 @@ def game(ctx):
     return f'<section class="wrap section">{rows}</section>'
 
 
-PAGES = {"game/index.html": dict(title=("The Game", "Das Spiel"), lede=("What it is and how it plays.", "Was es ist und wie es sich spielt."), body=game)}
+def how_it_plays(ctx):
+    t = ctx.t
+    return (f'<section class="wrap section"><div class="prose"><p>{t("Describe a session from the player's side: what they do first, what they "
+            "learn, and what pulls them back.", "Beschreibe eine Spielsitzung aus Sicht der Spielenden: was sie zuerst tun, was "
+            "sie lernen und was sie zurückholt.")}</p></div></section>')
+
+
+# Both pages belong to the "The Game" section in site.json ("pages"), so each shows the section's tab strip.
+PAGES = {
+    "game/index.html": dict(title=("The Game", "Das Spiel"), lede=("What it is and how it plays.", "Was es ist und wie es sich spielt."), body=game),
+    "game/how-it-plays.html": dict(title=("How It Plays", "So spielt es sich"), lede=("A session, start to finish.", "Eine Spielsitzung von Anfang bis Ende."),
+                                   body=how_it_plays),
+}

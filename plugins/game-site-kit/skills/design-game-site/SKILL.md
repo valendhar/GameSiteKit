@@ -41,12 +41,17 @@ fine; load them in `build.py`'s `<head>`.
 
 ## 4. Build the pages
 Edit or add modules in `_builder/pages/` (each defines `PAGES`; texts are tuples, one per language in `site.json`
-order). Add each new page to `site.json` `nav` if it belongs in the menu. Write player-facing copy: concrete,
+order). Add each new page to `site.json` `nav` if it belongs in the menu. When a menu entry has more than one
+page, list them under its `pages` (each `{"path", "title"}`, plus a shorter `"short"` tab name if the titles are
+long): every page of that section then shows a tab strip with all its pages and "Page 2 of 4", which stays in view
+while scrolling, and Previous / Next links at the bottom, so visitors see that a section has more pages. Galleries
+leave out pictures that aren't made yet; use `ctx.gallery(items, "gallery square")` for square textures. Write player-facing copy: concrete,
 plain, no hype, consistent names from the canon. Give every image an alt text.
 
 ## 5. Check
 Run `python _builder/dev.py` and check every page in the browser (desktop and ~400 px phone width, every
-language): layout, overflow, placeholders, links, the language switch. Fix, then ask the user whether to commit
+language): layout, overflow, placeholders, links, the language switch, and on every section page that the tab
+strip shows all the section's pages (on a phone it scrolls sideways, with the current page in the middle). Fix, then ask the user whether to commit
 and push (see `publish-site`).
 
 ## 6. Next steps to offer

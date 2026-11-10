@@ -11,6 +11,9 @@
   the file name without extension, upper-cased. ctx.figure("KEYART") shows one; a missing image becomes a labelled
   placeholder, so pages can be written before the art exists.
 - The first language is built at the root, every other one under /<lang>/.
+- Sections: a nav entry in site.json may list "pages" (each {"path", "title", optional "short"}). Every page of such a
+  section gets a tab strip under its title, showing all the section's pages and "Page 2 of 4", which stays in view
+  while scrolling, and Previous / Next links at the bottom. "short" is a shorter tab name when the titles don't fit.
 """
 import html
 import importlib
@@ -102,7 +105,51 @@ class Ctx:
         return f"<figure>{img}{cap}</figure>"
 
     def gallery(self, items, cls="gallery"):
-        return f'<div class="{cls}">' + "".join(self.figure(i, c) for i, c in items) + "</div>"
+        """A grid of pictures. A picture not made yet is left out rather than shown as an empty box among finished art,
+        unless none is made. Add "square" to cls for square tiles that fill (materials, textures)."""
+        made = [(i, c) for i, c in items if self.has(i)]
+        return f'<div class="{cls}">' + "".join(self.figure(i, c) for i, c in (made or items)) + "</div>"
+
+
+# ---------------------------------------------------------------- sections
+def title_of(entry, lang, short=False):
+    names = entry.get("short") if short and entry.get("short") else entry["title"]
+    return names.get(lang, names[LANGS[0]])
+
+
+def section_of(path):
+    """The nav entry whose "pages" include this page, when it has more than one page."""
+    for n in CONFIG["nav"]:
+        if len(n.get("pages", [])) > 1 and any(p["path"] == path for p in n["pages"]):
+            return n
+    return None
+
+
+def section_tabs(ctx):
+    sec = section_of(ctx.path)
+    if not sec:
+        return ""
+    pages = sec["pages"]
+    tabs = "".join(f'<li><a href="{ctx.url(p["path"])}"{" aria-current=\"page\"" if p["path"] == ctx.path else ""}>'
+                   f'{esc(title_of(p, ctx.lang, short=True))}</a></li>' for p in pages)
+    pos = [p["path"] for p in pages].index(ctx.path) + 1
+    name = title_of(sec, ctx.lang)
+    return (f'<nav class="section-tabs" aria-label="{esc(name)}"><div class="wrap st-inner">'
+            f'<a class="st-name" href="{ctx.url(pages[0]["path"])}">{esc(name)}</a><ol class="st-list">{tabs}</ol>'
+            f'<span class="st-count">{ctx.t(f"Page {pos} of {len(pages)}", f"Seite {pos} von {len(pages)}")}</span></div></nav>')
+
+
+def pager(ctx):
+    sec = section_of(ctx.path)
+    if not sec:
+        return ""
+    pages = sec["pages"]
+    i = [p["path"] for p in pages].index(ctx.path)
+    prev_ = (f'<a class="prev" href="{ctx.url(pages[i - 1]["path"])}"><small>{ctx.t("Previous", "Zurück")}</small>'
+             f'{esc(title_of(pages[i - 1], ctx.lang))}</a>') if i > 0 else "<span></span>"
+    next_ = (f'<a class="next" href="{ctx.url(pages[i + 1]["path"])}"><small>{ctx.t("Next", "Weiter")}</small>'
+             f'{esc(title_of(pages[i + 1], ctx.lang))}</a>') if i + 1 < len(pages) else "<span></span>"
+    return f'<nav class="pager wrap" aria-label="{ctx.t("Pages", "Seiten")}">{prev_}{next_}</nav>'
 
 
 # ---------------------------------------------------------------- layout
@@ -110,8 +157,10 @@ def layout(ctx, page, body):
     t = ctx.t
     title = t(*page["title"])
     cur_page, cur_lang = ' aria-current="page"', ' aria-current="true"'
-    nav = "".join(f'<a href="{ctx.url(n["path"])}"{cur_page if n["path"] == ctx.path else ""}>'
-                  f'{esc(n["title"].get(ctx.lang, n["title"][LANGS[0]]))}</a>' for n in CONFIG["nav"])
+    def nav_link(n):
+        here = n["path"] == ctx.path or any(p["path"] == ctx.path for p in n.get("pages", []))
+        return f'<a href="{ctx.url(n["path"])}"{cur_page if here else ""}>{esc(title_of(n, ctx.lang))}</a>'
+    nav = "".join(nav_link(n) for n in CONFIG["nav"])
     names = CONFIG.get("language_names", {})
     langs = "".join(f'<a href="{ctx.lang_url(l)}" hreflang="{l}"{cur_lang if l == ctx.lang else ""}>{esc(names.get(l, l))}</a>'
                     for l in LANGS) if len(LANGS) > 1 else ""
@@ -136,8 +185,9 @@ def layout(ctx, page, body):
   <nav aria-label="{t('Main', 'Hauptmenü')}">{nav}</nav>
   <div class="langs">{langs}</div>
 </div></header>
-<main id="main">{hero}{body}</main>
+<main id="main">{hero}{"" if page.get("bare") else section_tabs(ctx)}{body}{pager(ctx)}</main>
 <footer class="site-foot"><div class="wrap"><p>{esc(CONFIG["title"])} · {esc(CONFIG["tagline"])}</p></div></footer>
+<script src="{ctx.asset('assets/js/site.js')}" defer></script>
 </body>
 </html>
 """
